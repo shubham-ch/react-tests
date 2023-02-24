@@ -30,10 +30,11 @@ jobs:
         run: |
           cd my-app
           npm ci
-      - name: Build the app
-        run: |
-          cd my-app
           npm run build
+      # - name: Build the app
+      #   run: |
+      #     cd my-app
+
       - name: Run component test
         run: |
           cd my-app
