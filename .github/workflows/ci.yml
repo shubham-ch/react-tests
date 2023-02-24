@@ -19,23 +19,27 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: "npm"
-    - name: Install dependencies
-      #using npm ci is generally faster than running npm install
-      run: |
-        cd my-app
-        npm ci
-    - name: Build the app
-      run: |
-        cd my-app
-        npm run-script build
-    - name: Run component test
-      run: |
-        cd my-app
-        npm start &
-        npx wait-on --timeout 60000
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install dependencies
+        #using npm ci is generally faster than running npm install
+        run: |
+          cd my-app
+          npm ci
+      - name: Build the app
+        run: |
+          cd my-app
+          npm run build
+      - name: Run component test
+        run: |
+          cd my-app
+          npm run test
+      - name: Start the app
+        run: |
+          cd my-app
+          npm start &
+          npx wait-on --timeout 60000
